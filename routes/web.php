@@ -16,6 +16,10 @@ Route::middleware(['auth'])->group(function () {
         return view('pages.dashboard');
     })->name('home');
 
+    Route::get('profile', function () {
+        return view('pages.profile');
+    })->name('profile');
+
     Route::resource('user', UserController::class);
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);

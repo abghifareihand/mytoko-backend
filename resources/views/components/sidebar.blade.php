@@ -60,14 +60,14 @@
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Profile</span>
                 </li>
-                {{-- <li class="sidebar-item {{ Request::is('profile') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('profile') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('profile') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-circle"></i>
                         </span>
                         <span class="hide-menu">My Profile</span>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

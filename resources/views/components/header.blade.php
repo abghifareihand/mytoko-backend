@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="message-body">
-                            <a href="#profile" class="d-flex align-items-center gap-2 dropdown-item">
+                            <a href="{{ route('profile') }}" class="d-flex align-items-center gap-2 dropdown-item">
                                 <span
                                     class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
                                     <img src="{{ asset('assets/images/icons/icon-account.svg') }}" alt=""
