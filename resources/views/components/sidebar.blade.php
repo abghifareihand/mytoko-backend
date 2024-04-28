@@ -38,6 +38,14 @@
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Product</span>
                 </li>
+                <li class="sidebar-item {{ Request::is('category') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('category.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-kanban"></i>
+                        </span>
+                        <span class="hide-menu">Category</span>
+                    </a>
+                </li>
                 <li class="sidebar-item {{ Request::is('product') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('product.index') }}" aria-expanded="false">
                         <span>

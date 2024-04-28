@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Product')
+@section('title', 'Category')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -15,22 +15,24 @@
 
         <!-- Header -->
         @include('components.card-header', [
-            'title' => 'Products',
+            'title' => 'Categories',
             'breadcrumbs' => [
                 ['text' => 'Home', 'link' => route('home'), 'active' => false],
-                ['text' => 'Product', 'link' => '#', 'active' => true],
+                ['text' => 'Category', 'link' => '#', 'active' => true],
             ],
         ])
+
         <div class="card card-body">
             {{-- Create --}}
             <div class="d-flex justify-content-between align-items-center mb-9">
                 <form class="position-relative">
-                    <input type="text" class="form-control product-search ps-5" id="input-search" placeholder="Search...">
+                    <input type="text" class="form-control product-search ps-5" id="input-search"
+                        placeholder="Search...">
                     <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
                 </form>
-                <a href="{{ route('product.create') }}" class="btn btn-primary d-flex align-items-center">
+                <a href="{{ route('category.create') }}" class="btn btn-primary d-flex align-items-center">
                     <i class="ti ti-plus text-white me-1 fs-5"></i>
-                    Create Product
+                    Create Category
                 </a>
             </div>
 
@@ -39,40 +41,29 @@
                 <table class="table align-middle text-nowrap mb-0">
                     <thead class="text-dark fs-4">
                         <tr class="fw-semibold">
-                            <th>Name</th>
-                            <th>Stock</th>
-                            <th>Price</th>
-                            <th>Gallery</th>
+                            <th>Category Name</th>
+                            <th>Created</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody class="border-top">
-                        @foreach ($products as $product)
+                        @foreach ($categories as $category)
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ $product->galleries->first()->image_url ?? asset('assets/images/logos/place.png') }}"
-                                            class="rounded-2" width="48" height="48" alt="" />
-                                        <div class="ms-3">
-                                            <h6 class="mb-0 fs-4">{{ $product->name }}</h6>
-                                            <p class="mb-0">
-                                                {{ $product->category->name }}
-                                            </p>
+                                        <div class="me-2 pe-1">
+                                            <img src="{{ asset($category->image) }}"
+                                                class="rounded-2" width="80" height="80" alt="" />
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-semibold mb-1">{{ $category->name }}</h6>
+
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 fs-3">{{ $product->stock }} pcs</p>
+                                    <p class="mb-0 fs-3">{{ $category->created_at }}</p>
                                 </td>
-                                <td>
-                                    <p class="mb-0 fs-3">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</p>
-                                </td>
-                                <td>
-                                    <a href="{{ route('product.gallery.index', $product->id) }}" class="btn btn-outline-info">
-                                        Image Product
-                                    </a>
-                                </td>
-
 
 
                                 <td class="text-center">
@@ -83,14 +74,15 @@
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <li>
-                                                <a href="{{ route('product.edit', $product->id) }}"
+                                                <a href="{{ route('category.edit', $category->id) }}"
                                                     class="dropdown-item d-flex align-items-center gap-3">
                                                     <i class="fs-4 ti ti-edit"></i>
                                                     Edit
                                                 </a>
                                             </li>
                                             <li>
-                                                <form action="{{ route('product.destroy', $product->id) }}" method="POST">
+                                                <form action="{{ route('category.destroy', $category->id) }}"
+                                                    method="POST">
                                                     <input type="hidden" name="_method" value="DELETE" />
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                     <button class="dropdown-item d-flex align-items-center gap-3">
@@ -111,7 +103,7 @@
 
             {{-- Paginate --}}
             <div class="float-right mt-8">
-                {{ $products->withQueryString()->links() }}
+                {{ $categories->withQueryString()->links() }}
             </div>
         </div>
     </div>
