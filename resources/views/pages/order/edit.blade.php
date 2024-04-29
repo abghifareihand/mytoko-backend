@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="status" class="form-label">Order Status</label>
-                            <select class="form-control form-select" id="status" name="status">
+                            <select class="form-control form-select" id="status" name="status" {{ $order->status === 'pending' ? 'disabled' : '' }}>
                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>PENDING</option>
                                 <option value="paid" {{ $order->status == 'paid' ? 'selected' : '' }}>PAID</option>
                                 <option value="on_delivery" {{ $order->status == 'on_delivery' ? 'selected' : '' }}>ON DELIVERY</option>

@@ -49,7 +49,11 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Mengambil order berdasarkan ID
+        $order = Order::findOrFail($id);
+
+        // Menampilkan form edit status
+        return view('pages.order.edit', compact('order'));
     }
 
     /**
@@ -57,7 +61,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        // Update status pesanan
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('order.index')->with('success', 'Status Order updated successfully.');
     }
 
     /**
