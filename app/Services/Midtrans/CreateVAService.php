@@ -50,8 +50,13 @@ class CreateVAService extends Midtrans
             'item_details' => $items,
             'customer_details' => [
                 'first_name' => $this->order->user->name,
-                'email' => $this->order->user->email,
                 'phone' => $this->order->user->phone,
+                'email' => $this->order->user->email,
+                'billing_address' => [
+                    'address' => $this->order->user->name,
+                    'city' => $this->order->address->full_address,
+                ],
+
             ]
         ];
 

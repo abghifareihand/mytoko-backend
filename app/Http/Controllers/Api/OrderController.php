@@ -71,16 +71,11 @@ class OrderController extends Controller
         $order->payment_va_number = $apiResponse->va_numbers[0]->va_number;
         $order->save();
 
-        $address = Address::select('name', 'phone', 'full_address')->find($request->address_id);
-
         return response()->json([
             'code' => 200,
             'success' => true,
             'message' => 'Order created success',
-            'data' => [
-                'order' => $order,
-                'address' => $address,
-            ]
+            'data' => $order
         ]);
     }
 }
