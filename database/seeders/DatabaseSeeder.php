@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
@@ -36,8 +38,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+        Banner::factory(4)->create();
         Category::factory(3)->create();
         Product::factory(10)->create();
         Gallery::factory(20)->create();
+        Address::factory(15)->create();
     }
 }

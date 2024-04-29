@@ -24,10 +24,10 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = FakerFactory::create('id_ID');
+        $fakerId = FakerFactory::create('id_ID');
         return [
-            'name' => $faker->name(),
-            'email' => $faker->unique()->userName . '@gmail.com',
+            'name' => $fakerId->name(),
+            'email' => $fakerId->unique()->userName . '@gmail.com',
             'phone' => '08' . $this->faker->regexify('[0-9]{10}'),
             'role' =>  'USER',
             'email_verified_at' => now(),
