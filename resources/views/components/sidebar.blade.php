@@ -54,6 +54,14 @@
                         <span class="hide-menu">Product</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ Request::is('order') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('order.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-shopping-cart"></i>
+                        </span>
+                        <span class="hide-menu">Order</span>
+                    </a>
+                </li>
 
 
                 <li class="nav-small-cap">

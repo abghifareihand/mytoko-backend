@@ -24,12 +24,12 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select('id', 'name', 'email', 'role');
     }
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class)->select('id', 'name', 'phone', 'full_address');
     }
 
     public function orderItems()
