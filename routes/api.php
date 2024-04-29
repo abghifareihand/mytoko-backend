@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\CallbackController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
@@ -49,3 +50,6 @@ Route::get('products', [ProductController::class, 'index']);
 
 // get products by id
 Route::get('products/{id}', [ProductController::class, 'show']);
+
+// callback midtrans
+Route::post('callback', [CallbackController::class, 'callback']);
