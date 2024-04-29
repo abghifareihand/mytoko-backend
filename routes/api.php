@@ -18,14 +18,17 @@ Route::middleware('auth:sanctum')->group(function () {
     // logout
     Route::post('logout', [AuthController::class, 'logout']);
 
+    // create address
+    Route::post('address', [AddressController::class, 'store']);
+
     // get address by user id
     Route::get('address', [AddressController::class, 'index']);
 
-    // order
-    Route::post('order', [OrderController::class, 'order']);
+    // create order
+    Route::post('order', [OrderController::class, 'store']);
 
     // get order by user id
-    Route::get('order', [OrderController::class, 'fetch']);
+    Route::get('order', [OrderController::class, 'index']);
 });
 
 

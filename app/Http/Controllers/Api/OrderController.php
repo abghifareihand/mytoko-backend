@@ -12,7 +12,20 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function order(Request $request)
+    public function index(Request $request)
+    {
+        $order = Order::where('user_id', $request->user()->id)->get();
+
+        return response()->json([
+            'code' => 200,
+            'success' => true,
+            'message' => 'Get order user success',
+            'data' => $order,
+        ]);
+    }
+
+
+    public function store(Request $request)
     {
         $request->validate([
             'address_id' => 'required',
@@ -42,13 +55,6 @@ class OrderController extends Controller
             'grand_total' => $totalprice + $request->shipping_cost,
         ]);
 
-        // payment va name
-        // if ($request->payment_va_name) {
-        //     $order->update([
-        //         'payment_va_name' => $request->payment_va_name,
-        //     ]);
-        // }
-
         // Tambahkan item pesanan
         foreach ($request->items as $item) {
             OrderItem::create([
@@ -63,23 +69,11 @@ class OrderController extends Controller
         return response()->json([
             'code' => 200,
             'success' => true,
-            'message' => 'Order success',
+            'message' => 'Order created success',
             'data' => [
                 'order' => $order,
                 'address' => $address,
             ]
-        ]);
-    }
-
-    public function fetch(Request $request)
-    {
-        $order = Order::where('user_id', $request->user()->id)->get();
-
-        return response()->json([
-            'code' => 200,
-            'success' => true,
-            'message' => 'Get order user success',
-            'data' => $order,
         ]);
     }
 }
