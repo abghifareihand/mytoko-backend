@@ -8,12 +8,36 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua kategori
-        $products = Product::with('galleries')->select('id', 'name', 'price', 'stock')->paginate(10);
+        // filter product by name
+        $name = $request->input('name');
 
-        // Kembalikan respons JSON dengan data kategori
+        // filter product by price from to
+        $price_from = $request->input('price_from');
+        $price_to = $request->input('price_to');
+
+        // Ambil semua produk dengan atau tanpa pencarian berdasarkan nama
+        $product = Product::with(['galleries', 'category'])
+            ->select('id', 'name', 'price', 'stock', 'category_id');
+
+
+        if ($name) {
+            $product->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($price_from) {
+            $product->where('price', '>=', $price_from);
+        }
+
+        if ($price_to) {
+            $product->where('price', '<=', $price_to);
+        }
+
+
+        // Lakukan pagination dan kembalikan respons JSON dengan data produk
+        $products = $product->paginate(10);
+
         return response()->json([
             'code' => 200,
             'success' => true,
@@ -25,7 +49,7 @@ class ProductController extends Controller
     public function show($id)
     {
         // Ambil data produk berdasarkan ID dengan informasi lengkap dan muat galeri terkait
-        $product = Product::with('galleries')->findOrFail($id);
+        $product = Product::with(['galleries', 'category'])->findOrFail($id);
 
         // Kembalikan data dalam format JSON
         return response()->json([
