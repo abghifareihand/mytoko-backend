@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\Midtrans\CreateVAService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -63,6 +64,12 @@ class OrderController extends Controller
                 'quantity' => $item['quantity'],
             ]);
         }
+
+        $midtrans = new CreateVAService($order);
+        $apiResponse = $midtrans->getVA();
+
+        $order->payment_va_number = $apiResponse->va_numbers[0]->va_number;
+        $order->save();
 
         $address = Address::select('name', 'phone', 'full_address')->find($request->address_id);
 
