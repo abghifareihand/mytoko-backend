@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained('addresses')->onDelete('cascade');
             $table->string('trx_number');
-            $table->enum('status', ['pending', 'paid', 'on_delivery', 'delivered', 'expired', 'canceled']);
+            $table->enum('status', ['pending', 'paid', 'on_delivery', 'delivered', 'expired', 'cancelled']);
             $table->string('payment_method')->default('bank_transfer');
             $table->integer('total_price');
             $table->integer('shipping_cost');
