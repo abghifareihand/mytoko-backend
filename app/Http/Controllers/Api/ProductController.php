@@ -49,7 +49,17 @@ class ProductController extends Controller
     public function show($id)
     {
         // Ambil data produk berdasarkan ID dengan informasi lengkap dan muat galeri terkait
-        $product = Product::with(['galleries', 'category'])->findOrFail($id);
+        $product = Product::with(['galleries', 'category'])->find($id);
+
+        if (!$product) {
+            // Jika product tidak ditemukan, kembalikan respons error
+            return response()->json([
+                'code' => 404,
+                'success' => false,
+                'message' => 'Product not found',
+                'data' => null
+            ], 404);
+        }
 
         // Kembalikan data dalam format JSON
         return response()->json([

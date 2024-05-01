@@ -45,6 +45,9 @@ Route::get('banners', [BannerController::class, 'index']);
 // get category
 Route::get('categories', [CategoryController::class, 'index']);
 
+// get category by id
+Route::get('categories/{id}', [CategoryController::class, 'show']);
+
 // get products
 Route::get('products', [ProductController::class, 'index']);
 

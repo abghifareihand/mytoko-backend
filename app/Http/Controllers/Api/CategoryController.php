@@ -22,4 +22,28 @@ class CategoryController extends Controller
             'data' => $categories
         ]);
     }
+
+    public function show($id)
+    {
+        // Mengambil kategori berdasarkan ID dan memuat produk terkait
+        $category = Category::with('products')->find($id);
+
+        if (!$category) {
+            // Jika kategori tidak ditemukan, kembalikan respons error
+            return response()->json([
+                'code' => 404,
+                'success' => false,
+                'message' => 'Category not found',
+                'data' => null
+            ], 404);
+        }
+
+        // Jika kategori ditemukan, kembalikan respons JSON dengan data kategori
+        return response()->json([
+            'code' => 200,
+            'success' => true,
+            'message' => 'Get category by id success',
+            'data' => $category
+        ]);
+    }
 }
