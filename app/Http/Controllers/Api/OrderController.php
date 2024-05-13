@@ -32,11 +32,11 @@ class OrderController extends Controller
             'address_id' => 'required',
             'payment_method' => 'required',
             'shipping_cost' => 'required',
-            'items' => 'required|array',
+            'order_items' => 'required|array',
         ]);
 
         $totalprice = 0;
-        foreach ($request->items as $item) {
+        foreach ($request->order_items as $item) {
             // Ambil harga produk dari database (Anda harus menyesuaikan dengan model produk Anda)
             $productprice = Product::find($item['product_id'])->price;
             // Hitung total harga produk dengan mengalikan harga dengan jumlah
@@ -57,7 +57,7 @@ class OrderController extends Controller
         ]);
 
         // Tambahkan item pesanan
-        foreach ($request->items as $item) {
+        foreach ($request->order_items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item['product_id'],

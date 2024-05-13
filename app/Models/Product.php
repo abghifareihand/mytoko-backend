@@ -28,4 +28,18 @@ class Product extends Model
     {
         return $this->hasMany(Gallery::class);
     }
+
+    // Define the reverse relationship with the Favorite model
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    // Product memiliki banyak ulasan
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
 }

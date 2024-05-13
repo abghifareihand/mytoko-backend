@@ -13,13 +13,16 @@ class ProductController extends Controller
         // filter product by name
         $name = $request->input('name');
 
+        // filter product by name
+        $limit = $request->input('limit', 10);
+
         // filter product by price from to
         $price_from = $request->input('price_from');
         $price_to = $request->input('price_to');
 
-        // Ambil semua produk dengan atau tanpa pencarian berdasarkan nama
-        $product = Product::with(['galleries', 'category'])
-            ->select('id', 'name', 'price', 'stock', 'category_id');
+        $product = Product::with(['category', 'galleries' => function ($query) {
+            $query->take(1); // Ambil hanya satu galeri untuk setiap produk
+        }])->select('id', 'name', 'price', 'stock', 'category_id');
 
 
         if ($name) {
@@ -36,7 +39,16 @@ class ProductController extends Controller
 
 
         // Lakukan pagination dan kembalikan respons JSON dengan data produk
-        $products = $product->paginate(10);
+        // $products = $product->get();
+        $products = $product->paginate($limit);
+
+        foreach ($products as $product) {
+            // Hitung total favorit untuk produk ini
+            $product->total_favorite = $product->favorites->count();
+
+            // Periksa apakah user sedang login memiliki produk ini dalam favoritnya
+            $product->is_favorite = $product->favorites->contains('user_id', $request->user()->id);
+        }
 
         return response()->json([
             'code' => 200,
@@ -49,7 +61,7 @@ class ProductController extends Controller
     public function show($id)
     {
         // Ambil data produk berdasarkan ID dengan informasi lengkap dan muat galeri terkait
-        $product = Product::with(['galleries', 'category'])->find($id);
+        $product = Product::with(['galleries', 'category', 'reviews.user'])->find($id);
 
         if (!$product) {
             // Jika product tidak ditemukan, kembalikan respons error
